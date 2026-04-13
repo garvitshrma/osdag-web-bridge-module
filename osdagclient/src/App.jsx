@@ -1,0 +1,190 @@
+import { useContext, useEffect } from "react";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Outlet,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
+import { Worker } from "@react-pdf-viewer/core";
+import Window from "./components/Window";
+import { GlobalProvider } from "./context/GlobalState";
+import { ModuleProvider } from "./context/ModuleState";
+import { UserContext, UserProvider } from "./context/UserState";
+import UserAccount from "./components/userAccount/UserAccount";
+// New component for the login page
+import LoginPage from "./components/userAuth/LoginPage";
+
+// jwt imports
+import jwt_decode from "jwt-decode";
+
+// module imports
+import FinPlate from "./modules/shearConnection/finPlate/FinPlate";
+import CoverPlateWelded from "./modules/coverPlateWelded/CoverPlateWelded";
+
+import Homepage from "./homepage/pages/Homepage";
+import SelectModulePage from "./homepage/pages/SelectModulePage";
+import CleatAngle from "./modules/shearConnection/cleatAngle/CleatAngle";
+import EndPlate from "./modules/shearConnection/endPlate/EndPlate";
+import SimplySupportedBeam from "./modules/flexuralMember/simplySupportedBeam";
+import BoltedToEnd from "./modules/TensionMembers/BoltedToEnd/BoltedToEnd";
+import CoverPlateBolted from "./modules/coverPlateBolted/CoverPlateBolted";
+import BeamBeamEndPlate from "./modules/beamBeamEndPlate/BeamBeamEndPlate";
+import SeatedPlate from "./modules/shearConnection/seatAngle/SeatedPlate";
+
+import GroupDesign from "./components/GroupDesign";
+import { Toaster } from "react-hot-toast";
+
+import "./App.css"; // ✓ CSS properly imported
+let renderedOnce = false;
+
+function App() {
+  
+  // State to track user authentication status
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // using redux variables
+  const { isLoggedIn, userLogin } = useContext(UserContext);
+  let loggedIn = false;
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      // <Route path="/" element={<>
+      //   <h1 className="text-3xl font-bold underline">
+      //     Hello world!
+      //   </h1></>}>
+      <Route path="/" element={<Root loggedIn={loggedIn} />}>
+        {/* <Route path="/home" element={<Mainwindow />} /> */}
+        <Route path="/home" element={<Homepage />} />
+        <Route path="/GroupDesign" element={<GroupDesign />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/:moduleName" element={<SelectModulePage />} />
+        <Route path="/design-type/:designType" element={<Window />} />
+        <Route path="/design/connections/shear/fin_plate/:projectId?" element={<FinPlate />} />
+        <Route path="/design/connections/shear/end_plate/:projectId?" element={<EndPlate />} />
+        <Route path="/design/connections/shear/cleat_angle/:projectId?" element={<CleatAngle />} />
+        <Route path="/design/connections/shear/seatAngle/:projectId?" element={<SeatedPlate />} />
+        <Route path="/design/:designType/fin_plate/:projectId?" element={<FinPlate />} />
+        <Route path="/design/:designType/end_plate/:projectId?" element={<EndPlate />} />
+        <Route path="/design/:designType/seatAngle/:projectId?" element={<SeatedPlate />} />
+        <Route
+          path="/design/:designType/seatAngle/:projectId?"
+          element={<SeatedPlate />}
+        />
+        <Route
+          path="/design/:designType/cleat_angle/:projectId?"
+          element={<CleatAngle />}
+        />
+        <Route
+          path="/design/:designType/beam-to-beam-splice/cover_plate_bolted/:projectId?"
+          element={<CoverPlateBolted />}
+        />
+        <Route
+          path="/design/:designType/beam-to-beam-splice/end_plate/:projectId?"
+          element={<BeamBeamEndPlate />}
+        />
+        <Route path="/design/tension-member/bolted_to_end_gusset/:projectId?" element={<BoltedToEnd />} />
+
+        <Route
+          path='/design/:designType/bolted_to_end_gusset'
+          element={<BoltedToEnd />}
+        />
+        <Route
+          path="/design/:designType/beam-to-beam-splice/cover_plate_welded/:projectId?"
+          element={<CoverPlateWelded />}
+        />
+        <Route
+          path="/design/:designType/simply_supported_beam/:projectId?"
+          element={<SimplySupportedBeam />}
+        />
+        <Route path="/user" element={<UserAccount />} />
+      </Route>
+    )
+  );
+
+  return (
+    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+      <UserProvider>
+        <GlobalProvider>
+          <ModuleProvider>
+            <div className="app">
+              
+              {/* Show the login page when not authenticated */}
+              {/* {!isLoggedIn && <LoginPage />} */}
+              {/* Render the router when authenticated */}
+              {/* <Toaster position="top-right" /> */}
+              <RouterProvider router={router} />
+            </div>
+          </ModuleProvider>
+        </GlobalProvider>
+      </UserProvider>
+    </Worker>
+  );
+}
+
+const Root = (loggedIn) => {
+  const { userLogin } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  // Clear sessions when route changes
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+
+    // Clear sessions when navigating to non-design pages
+    if (currentPath === '/' || currentPath === '/home' || currentPath.startsWith('/user')) {
+
+    }
+  }, []);
+
+  if (!renderedOnce) {
+    // obtain the access token from the localStorage, when the user is on the main application page
+    // and the user nagivates to login page, the user should not have to login again
+    // then, implemented access_token checking and decoding
+    if (localStorage.getItem("access")) {
+      const decodedAccessToken = jwt_decode(localStorage.getItem("access"));
+
+      // check expiration
+      if (
+        decodedAccessToken.exp > Date.now() / 1000 &&
+        decodedAccessToken.username &&
+        decodedAccessToken.email
+      ) {
+        // the user should automatically be logged in
+        loggedIn = true;
+
+        userLogin(
+          decodedAccessToken.username,
+          "", // Don't pass password for security
+          false,
+          true
+        );
+      } else {
+        // login again
+        loggedIn = false;
+      }
+
+    } else {
+      // login again
+      loggedIn = false;
+    }
+
+    renderedOnce = true;
+  }
+
+  // Check if the current pathname matches the specified path
+  const isDesignPage = window.location.pathname.startsWith("/design/");
+  const isUserProfilePage =
+    window.location.pathname.startsWith("/user");
+  const isLoginPage = window.location.pathname === "/";
+
+  return (
+    <>
+      {/* Show Sidebar when authenticated and not on a design page */}
+      {/* {!isLoginPage && !isDesignPage && !isUserProfilePage && <Sidebar />} */}
+      <Outlet />
+
+    </>
+  );
+};
+
+export default App;

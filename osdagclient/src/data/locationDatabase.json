@@ -1,0 +1,187 @@
+{
+  "Rajasthan": {
+    "Jaipur": {
+      "windSpeed": 47,
+      "zone": "II",
+      "factor": 0.10,
+      "minTemp": -2.2,
+      "maxTemp": 49
+    },
+
+    "Ajmer": {
+      "windSpeed": 47,
+      "zone": "II",
+      "factor": 0.10,
+      "minTemp": -2.8,
+      "maxTemp": 47.4
+    },
+
+    "Bikaner": {
+      "windSpeed": 47,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": -4,
+      "maxTemp": 49.4
+    },
+
+    "Udaipur": {
+      "windSpeed": 47,
+      "zone": "II",
+      "factor": 0.10,
+      "minTemp": 0.4    ,
+      "maxTemp": 44.6
+    }
+  },
+  "Maharashtra": {
+    "Mumbai": {
+      "windSpeed": 44,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 7.4,
+      "maxTemp": 42.2
+    },
+    "Pune": {
+      "windSpeed": 39,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 1.7,
+      "maxTemp": 43.3
+    },
+    "Nagpur": {
+      "windSpeed": 0.10,
+      "zone": "II",
+      "factor": 0.16,
+      "minTemp": 3.9,
+      "maxTemp": 47.8
+    }
+  },
+  "West Bengal": {
+    "Kolkata": {
+      "windSpeed": 50,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 6.7,
+      "maxTemp": 43.9
+    }
+  },
+  "Madhya Pradesh": {
+    "Indore": {
+      "windSpeed": 39,
+      "zone": "II",
+      "factor": 0.1,
+      "minTemp": -2.8,
+      "maxTemp": 46
+    }
+  },
+  "Tamil Nadu": {
+    "Chennai": {
+      "windSpeed": 50,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 15.7,
+      "maxTemp": 49.1
+    },
+    "Tiruchirappalli": {
+      "windSpeed": 47,
+      "zone": "II",
+      "factor": 0.10,
+      "minTemp": 13.9,
+      "maxTemp": 43.9
+    }
+  },
+  "Andhra Pradesh": {
+    "Vishakhapatnam": {
+      "windSpeed": 50,
+      "zone": "II",
+      "factor": 0.10,
+      "minTemp": 10.5,
+      "maxTemp": 45.4
+    }
+  },
+  "Bihar": {
+    "Patna": {
+      "windSpeed": 47,
+      "zone": "IV",
+      "factor": 0.24,
+      "minTemp": 1.4,
+      "maxTemp": 46.6
+    },
+    "Gaya": {
+      "windSpeed": 39,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 1.2,
+      "maxTemp": 49
+    }
+  },
+  "Gujrat": {
+    "Ahmedabad": {
+      "windSpeed": 39,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 2.2,
+      "maxTemp": 47.8
+    },
+    "Rajkot": {
+      "windSpeed": 39,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": -0.6,
+      "maxTemp": 47.9
+    }
+  },
+  "Karnataka": {
+    "Mumbai": {
+      "windSpeed": 44,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 7.4,
+      "maxTemp": 42.2
+    }
+  },
+  "Kerala": {
+    "Mumbai": {
+      "windSpeed": 44,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 7.4,
+      "maxTemp": 42.2
+    }
+  },
+  "Orissa": {
+    "Mumbai": {
+      "windSpeed": 44,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 7.4,
+      "maxTemp": 42.2
+    }
+  },
+  "Telangana": {
+    "Mumbai": {
+      "windSpeed": 44,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 7.4,
+      "maxTemp": 42.2
+    }
+  },
+  "Assam": {
+    "Mumbai": {
+      "windSpeed": 44,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 7.4,
+      "maxTemp": 42.2
+    }
+  },
+  "Andaman and Nicobar Islands": {
+    "Mumbai": {
+      "windSpeed": 44,
+      "zone": "III",
+      "factor": 0.16,
+      "minTemp": 7.4,
+      "maxTemp": 42.2
+    }
+  }
+}
